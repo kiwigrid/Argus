@@ -42,7 +42,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
-                            <includeArtifacIds>argus</includeArtifacIds>
+                            <includeArtifactIds>argus</includeArtifactIds>
                             <includeGroupIds>${project.groupId}</includeGroupIds>
                             <excludeTransitive>true</excludeTransitive>
                             <type>zip</type>
@@ -57,7 +57,7 @@
                         <phase>generate-test-resources</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/generated-test-resources</outputDirectory>
-                            <includeArtifacIds>argus</includeArtifacIds>
+                            <includeArtifactIds>argus</includeArtifactIds>
                             <includeGroupIds>${project.groupId}</includeGroupIds>
                             <excludeTransitive>true</excludeTransitive>
                             <type>zip</type>
@@ -381,6 +381,11 @@
             <artifactId>weka-stable</artifactId>
             <version>3.6.14</version>
         </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.38</version>
+		</dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
