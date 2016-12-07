@@ -377,7 +377,17 @@ public class DefaultTSDBService extends DefaultService implements TSDBService {
                 chunkEnd = Math.min(objects.size(), chunkStart + CHUNK_SIZE);
                 try {
                     StringEntity entity = new StringEntity(fromEntity(objects.subList(chunkStart, chunkEnd)));
-                    HttpResponse response = executeHttpRequest(method, endpoint, entity);
+						_logger.debug("{} ({}) -> {}", endpoint, method, new Object() {
+							@Override
+							public String toString() {
+								try {
+									return EntityUtils.toString(entity);
+								} catch (IOException e) {
+									return "error -> " + e.getCause();
+								}
+							}
+						});
+					HttpResponse response = executeHttpRequest(method, endpoint, entity);
 
                     extractResponse(response);
                 } catch (UnsupportedEncodingException ex) {
