@@ -10,10 +10,14 @@
 			<property name="javax.persistence.jdbc.url" value="${build.property.persistence.url}"/>
 			<property name="javax.persistence.jdbc.user" value="${build.property.persistence.user}"/>
 			<property name="javax.persistence.jdbc.password" value="${build.property.persistence.password}"/>
-			<property name="eclipselink.ddl-generation" value="create-tables"/>
+			<!--<property name="javax.persistence.schema-generation.database.action" value="create-tables"/>-->
+			<property name="eclipselink.ddl-generation" value="${build.property.persistence.ddl-generation}"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
 			<property name="eclipselink.logging.level" value="${build.property.persistence.loglevel}"/>
+			<property name="eclipselink.target-database" value="MYSQL"/>
 			<property name="eclipselink.logging.parameters" value="true"/>
+			<property name="eclipselink.canonicalmodel.subpackage" value="unit"/>
 		</properties>
 	</persistence-unit>
 </persistence>
+
