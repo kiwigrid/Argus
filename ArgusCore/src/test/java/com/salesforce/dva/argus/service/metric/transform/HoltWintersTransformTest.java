@@ -31,15 +31,31 @@
      
 package com.salesforce.dva.argus.service.metric.transform;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class HoltWintersTransformTest {
 
-    @Test
+	private static Locale locale;
+
+	@BeforeClass
+	public static void beforeClass() {
+		locale = Locale.getDefault();
+		Locale.setDefault(Locale.US);
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		Locale.setDefault(locale);
+	}
+
+	@Test
     public void testHoltWintersForecast() {
         HoltWintersAnalysis holtWinters = new HoltWintersAnalysis();
         Map<Long, String> dp = new HashMap<Long, String>();
