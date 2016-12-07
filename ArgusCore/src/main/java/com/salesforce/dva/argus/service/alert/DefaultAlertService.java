@@ -290,6 +290,9 @@ public class DefaultAlertService extends DefaultJPAService implements AlertServi
 		List<History> historyList = new ArrayList<>();
 		List<AlertIdWithTimestamp> alertIdWithTimestampList = _mqService.dequeue(ALERT.getQueueName(), AlertIdWithTimestamp.class, timeout,
 				alertCount);
+		if(alertIdWithTimestampList.isEmpty()) {
+			return Collections.emptyList();
+		}
 		EntityManager em = emf.get();
 		int failedNotificationsCount = 0;
 		String logMessage = null;
