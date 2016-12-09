@@ -291,6 +291,7 @@ public class DefaultAlertService extends DefaultJPAService implements AlertServi
 		List<AlertIdWithTimestamp> alertIdWithTimestampList = _mqService.dequeue(ALERT.getQueueName(), AlertIdWithTimestamp.class, timeout,
 				alertCount);
 		if(alertIdWithTimestampList.isEmpty()) {
+			_logger.info("no alerts due");
 			return Collections.emptyList();
 		}
 		EntityManager em = emf.get();
