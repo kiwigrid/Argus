@@ -136,6 +136,7 @@ public class Producer {
      */
     public <T extends Serializable> int enqueue(final String topic, List<T> objects) {
         int messagesBuffered = 0;
+        _logger.trace("enqueueing topic {}, {} objects", topic, objects.size());
 
         for (T object : objects) {
             final String value;
