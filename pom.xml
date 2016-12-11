@@ -355,38 +355,6 @@
             </build>
         </profile>
         <profile>
-            <id>local-tomcat</id>
-            <activation><activeByDefault>false</activeByDefault></activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.1</version>
-                        <configuration>
-                            <systemProperties>
-                                <argus.config.private.location>
-                                    ${top}/argus.properties
-                                </argus.config.private.location>
-                            </systemProperties>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>tomcat-run</id>
-                                <goals>
-                                    <goal>exec-war-only</goal>
-                                </goals>
-                                <phase>package</phase>
-                                <configuration>
-                                    <path>/argusws</path>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>docker</id>
             <build>
                 <pluginManagement>
@@ -397,7 +365,6 @@
                         <version>0.4.11</version>
                         <configuration>
                             <imageName>${dockerImages.base.name}/${project.artifactId}</imageName>
-                            <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                             <forceTags>true</forceTags>
                             <imageTags>
                                 <imageTag>${project.version}</imageTag>

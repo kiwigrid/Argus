@@ -75,7 +75,7 @@ import static com.salesforce.dva.argus.system.SystemAssert.requireArgument;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "_TRIGGER", uniqueConstraints = @UniqueConstraint(columnNames = { "name", "alert_id" }))
+@Table(name = "TRIGGER", uniqueConstraints = @UniqueConstraint(columnNames = { "name", "alert_id" }))
 public class Trigger extends JPAEntity implements Serializable {
 
     //~ Instance fields ******************************************************************************************************************************
