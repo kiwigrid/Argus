@@ -28,6 +28,8 @@ services:
      - "3000:3000"
     volumes:
       - ./storage/grafana/var/lib/grafana:/var/lib/grafana
+    depends_on:
+      - "opentsdb"
   redis:
     image: redis:3.2.5
     hostname: redis
@@ -55,6 +57,10 @@ services:
       - ./conf/argus-web-services/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
     environment:
       - "CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Dargus.config.public.location=/usr/argus/argus.properties"
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
   argus-web:
     image: rmelick/argus-web
     hostname: argus-web
@@ -63,6 +69,10 @@ services:
       - "8082:8000"
     volumes:
       - ./conf/config.js:/usr/argus/argusWeb/app/js/config.js:ro
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
   argus-metrics-client:
     image: rmelick/argus-client
     hostname: argus-metrics-client
@@ -75,6 +85,10 @@ services:
       - "EXTRA_JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5000"
       - "ARGUSCLIENT_CFG=/usr/argus/argusClient/argus.properties"
     command: [COMMIT_METRICS]
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
   argus-alert-client:
     image: rmelick/argus-client
     hostname: argus-alert-client
@@ -87,6 +101,10 @@ services:
       - "EXTRA_JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5000"
       - "ARGUSCLIENT_CFG=/usr/argus/argusClient/argus.properties"
     command: [ALERT]
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
   argus-annotations-client:
     image: rmelick/argus-client
     hostname: argus-annotations-client
@@ -99,6 +117,10 @@ services:
       - "EXTRA_JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5000"
       - "ARGUSCLIENT_CFG=/usr/argus/argusClient/argus.properties"
     command: [COMMIT_ANNOTATIONS]
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
   argus-processor-client:
     image: rmelick/argus-client
     hostname: argus-processor-client
@@ -111,3 +133,7 @@ services:
       - "EXTRA_JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5000"
       - "ARGUSCLIENT_CFG=/usr/argus/argusClient/argus.properties"
     command: [PROCESS_QUERIES]
+    depends_on:
+      - "opentsdb"
+      - "postgres"
+      - "kafka"
