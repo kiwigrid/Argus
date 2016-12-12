@@ -1,6 +1,6 @@
-FROM openjdk:8u111-jdk-alpine
+FROM openjdk:8u111-jdk
 
-RUN apk add -q --update vim bash
+#RUN apk add -q --update vim bash
 
 ENV APP_DIR /usr/argus/argusClient
 

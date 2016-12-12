@@ -167,8 +167,9 @@ public class GlobalInterlock implements Serializable {
             tx.begin();
 
             GlobalInterlock lock = em.merge(new GlobalInterlock(type, note));
-
-            em.flush();
+            // just for mysql: @PrePersist does not work with EclipseLink and MySQL
+			lock.lockTime = System.currentTimeMillis();
+			em.flush();
             tx.commit();
             return Long.toHexString(lock.lockTime);
         } catch (Exception ex) {

@@ -14,7 +14,7 @@
     <organization>
         <name>Salesforce</name>
         <url>http://www.salesforce.com</url>
-    </organization>    
+    </organization>
     <licenses>
         <license>
             <name>BSD 3-Clause</name>
@@ -136,35 +136,6 @@
         </filters>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.4.11</version>
-                    <configuration>
-                        <imageName>${dockerImages.base.name}/${project.artifactId}</imageName>
-                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                        <forceTags>true</forceTags>
-                        <imageTags>
-                            <imageTag>${project.version}</imageTag>
-                        </imageTags>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>build-image</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>push-image</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>push</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -305,7 +276,7 @@
                     <failOnError>false</failOnError>
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
-                    </links>                    
+                    </links>
                     <windowtitle>API Documentation</windowtitle>
                 </configuration>
             </plugin>
@@ -381,6 +352,43 @@
                         </executions>
                     </plugin>
                 </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <build>
+                <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.4.11</version>
+                        <configuration>
+                            <imageName>${dockerImages.base.name}/${project.artifactId}</imageName>
+                            <forceTags>true</forceTags>
+                            <imageTags>
+                                <imageTag>${project.version}</imageTag>
+                            </imageTags>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>push-image</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+                </pluginManagement>
             </build>
         </profile>
     </profiles>

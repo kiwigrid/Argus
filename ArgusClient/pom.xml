@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>argus</artifactId>
@@ -83,33 +84,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}-jar-with-dependencies.jar</include>
-                        </resource>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.basedir}</directory>
-                            <include>client.sh</include>
-                            <include>README.md</include>
-                        </resource>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.basedir}/src/main/resources/com/salesforce/dva/argus/client/</directory>
-                            <include>usage.txt</include>
-                        </resource>
-                    </resources>
-                    <buildArgs>
-                        <JAR_WITH_DEPS>${project.build.finalName}-jar-with-dependencies.jar</JAR_WITH_DEPS>
-                    </buildArgs>
-                </configuration>
-            </plugin>
+
         </plugins>
         <resources>
             <resource>
@@ -133,7 +108,9 @@
             </testResource>
             <testResource>
                 <directory>${basedir}/src/test/resources</directory>
-                <excludes><exclude>**/*.properties</exclude></excludes>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
             </testResource>
             <testResource>
                 <directory>${project.build.directory}/generated-test-resources</directory>
@@ -170,4 +147,41 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>${project.build.finalName}-jar-with-dependencies.jar</include>
+                                </resource>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.basedir}</directory>
+                                    <include>client.sh</include>
+                                    <include>README.md</include>
+                                </resource>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.basedir}/src/main/resources/com/salesforce/dva/argus/client/
+                                    </directory>
+                                    <include>usage.txt</include>
+                                </resource>
+                            </resources>
+                            <buildArgs>
+                                <JAR_WITH_DEPS>${project.build.finalName}-jar-with-dependencies.jar</JAR_WITH_DEPS>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
