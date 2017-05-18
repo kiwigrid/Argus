@@ -93,10 +93,16 @@ public class AuthFilter implements Filter {
             if(autoLogin && remoteUser == null) {
                 String loginUser = String.valueOf(system.getConfiguration().getValue(SystemConfiguration.Property.AUTH_FILTER_AUTO_LOGIN_USER));
                 String loginPwd = String.valueOf(system.getConfiguration().getValue(SystemConfiguration.Property.AUTH_FILTER_AUTO_LOGIN_PWD));
+                // Wrap user initializing explicit into a transaction w/ explicit begin and end.
+				// Otherwise transaction-begin for actual request will fail by Preconditions#checkState in JpaPersistService#begin
+                ArgusWebServletListener.getSystem().getUnitOfWork().begin();
+
                 PrincipalUser principalUser = authService.getUser(loginUser, loginPwd);
                 PrincipalUserDto principalUserDto = PrincipalUserDto.transformToDto(principalUser);
                 httpServletRequest.getSession(true).setAttribute(AuthFilter.USER_ATTRIBUTE_NAME, principalUserDto);
                 user = principalUserDto.getUserName();
+
+                ArgusWebServletListener.getSystem().getUnitOfWork().end();
             }
             // If it's not an HTTP OPTION request or login/logout request and no principalUser is associated
             // with HttpSession, then return SC_UNAUTHORIZED
