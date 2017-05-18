@@ -66,7 +66,9 @@ public class AuthFilter implements Filter {
     //~ Methods **************************************************************************************************************************************
 
     @Override
-    public void destroy() { }
+    public void destroy() {
+    	// nothing to do here
+	}
 
     /**
      * Authenticates a user if required.
@@ -83,7 +85,7 @@ public class AuthFilter implements Filter {
         String user = null;
 
         if (HttpServletRequest.class.isAssignableFrom(request.getClass())) {
-            boolean autoLogin = Boolean.valueOf(system.getConfiguration().getValue(SystemConfiguration.Property.AUTH_FILTER_AUTO_LOGIN));
+            boolean autoLogin = Boolean.parseBoolean(system.getConfiguration().getValue(SystemConfiguration.Property.AUTH_FILTER_AUTO_LOGIN));
             HttpServletRequest httpServletRequest = HttpServletRequest.class.cast(request);
             HttpSession httpSession = httpServletRequest.getSession(true);
             Object remoteUser = httpSession.getAttribute(USER_ATTRIBUTE_NAME);
@@ -124,7 +126,9 @@ public class AuthFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException { }
+    public void init(FilterConfig filterConfig) throws ServletException {
+		// nothing to do here
+	}
 
     private boolean _isAuthEndpoint(HttpServletRequest req) {
         String path = req.getRequestURI();
