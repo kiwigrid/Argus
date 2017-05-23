@@ -231,6 +231,7 @@ public class HbaseSchemaService extends DefaultService implements SchemaService 
         try {
             return HConnectionManager.createConnection(config);
         } catch (IOException ioe) {
+        	_logger.error("Failed to instantiate HConnection object.", ioe);
             throw new SystemException("Failed to instantiate HConnection object.", ioe);
         }
     }
@@ -308,6 +309,7 @@ public class HbaseSchemaService extends DefaultService implements SchemaService 
             metricTable = _getHbaseConnection().getTable(TableType.METRIC.getTableName());
             metricTable.put(new ArrayList<Put>(metricPuts.values()));
         } catch (IOException e) {
+        	_logger.error("Failed to put schema records to Hbase.", e);
             throw new SystemException("Failed to put schema records to Hbase.", e);
         } finally {
             _closeTables(scopeTable, metricTable);

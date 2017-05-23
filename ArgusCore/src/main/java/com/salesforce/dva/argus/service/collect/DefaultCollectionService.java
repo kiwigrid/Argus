@@ -186,7 +186,9 @@ public class DefaultCollectionService extends DefaultJPAService implements Colle
         }
         if (!dequeued.isEmpty()) {
             _tsdbService.putMetrics(dequeued);
-            _logger.debug("Committed {} metrics.", dequeued.size());
+			_logger.debug("Committed {} metrics.", dequeued.size());
+			_schemaService.put(dequeued);
+			_logger.debug("Committed {} metrics for schema records creation.", dequeued.size());
         }
         return dequeued;
     }
